@@ -13,8 +13,8 @@ if [ $# -ne 2 ]; then
 fi
 
 # How many disks
-#if [ `lsblk | grep disk | awk '{print $1}'` -gt 1 ]; then
-#    echo "Usage: $0 <disk> <password>"
+#if [ `lsblk | grep disk | awk '{print $1}'` | wc -l -gt 1 ]; then
+#    echo "2 or more disks"
 #    exit 1
 #fi
 
@@ -28,7 +28,7 @@ sudo dpkg -i /tmp/libtcl8.deb /tmp/tcl-expect.deb /tmp/expect.deb
 
 # Install VyOS with only one disk (detected) in the system.
 install_one_disk() {
-  expect <<EOF
+ expect <<EOF
 
     spawn $run install image
 
@@ -44,12 +44,12 @@ install_one_disk() {
     expect "Which drive should GRUB modify the boot partition on?" {send "$disk\r"}
     expect "vyos@vyos:~$" {send "\r"}
 
-  EOF
+EOF
 }
 
 # Install VyOS on system which detect more then one disk. Without RAID.
 install_couple_disk() {
-  expect <<EOF
+ expect <<EOF
 
     spawn $run install image
 
@@ -66,7 +66,7 @@ install_couple_disk() {
     expect "Which drive should GRUB modify the boot partition on?" {send "$disk\r"}
     expect "vyos@vyos:~$" {send "\r"}
 
-  EOF
+EOF
 }
 
 # How many disks. Different interactive installers for one and more disks
