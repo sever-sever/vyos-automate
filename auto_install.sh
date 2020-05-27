@@ -11,11 +11,12 @@ if [ $# -ne 2 ]; then
 fi
 
 # Download temp packages for autoinstall (1.2.x jessie)
-wget http://ftp.de.debian.org/debian/pool/main/e/expect/expect_5.45-6_amd64.deb
-wget http://ftp.de.debian.org/debian/pool/main/t/tcl8.6/libtcl8.6_8.6.2+dfsg-2_amd64.deb
-wget http://ftp.de.debian.org/debian/pool/main/e/expect/tcl-expect_5.45-6_amd64.deb
+curl --url http://ftp.de.debian.org/debian/pool/main/e/expect/expect_5.45-6_amd64.deb --output /tmp/expect.deb
+curl --url http://ftp.de.debian.org/debian/pool/main/t/tcl8.6/libtcl8.6_8.6.2+dfsg-2_amd64.deb --output /tmp/libtcl8.deb
+curl --url http://ftp.de.debian.org/debian/pool/main/e/expect/tcl-expect_5.45-6_amd64.deb --output /tmp/tcl-expect.deb
 
-dpkg -i *.deb
+# Install temp packagers
+sudo dpkg -i /tmp/libtcl8.deb /tmp/tcl-expect.deb /tmp/expect.deb
 
 expect <<EOF
 
