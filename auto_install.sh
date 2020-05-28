@@ -12,19 +12,28 @@ if [ $# -ne 2 ]; then
     exit 1
 fi
 
-# How many disks
-#if [ `lsblk | grep disk | awk '{print $1}'` | wc -l -gt 1 ]; then
-#    echo "2 or more disks"
-#    exit 1
-#fi
-
 # Download temp packages for autoinstall (1.2.x jessie)
 curl --url http://ftp.de.debian.org/debian/pool/main/e/expect/expect_5.45-6_amd64.deb --output /tmp/expect.deb
 curl --url http://ftp.de.debian.org/debian/pool/main/t/tcl8.6/libtcl8.6_8.6.2+dfsg-2_amd64.deb --output /tmp/libtcl8.deb
 curl --url http://ftp.de.debian.org/debian/pool/main/e/expect/tcl-expect_5.45-6_amd64.deb --output /tmp/tcl-expect.deb
 
-# Install temp packagers
+# Install temp packages
 sudo dpkg -i /tmp/libtcl8.deb /tmp/tcl-expect.deb /tmp/expect.deb
+
+# Configure login before install.
+preinstall() {
+
+source /opt/vyatta/etc/functions/script-template
+cfg="/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper"
+
+$cfg begin
+$cfg set system login user vyos authentication plaintext-password ${password}
+$cfg set service ssh disable-host-validation
+$cfg commit
+$cfg save
+$cfg end
+
+}
 
 # Install VyOS with only one disk (detected) in the system.
 install_one_disk() {
@@ -49,6 +58,7 @@ EOF
 }
 
 # Install VyOS on system which detect more then one disk. Without RAID.
+# Installation will be only to one disk. Different prompts for one and 2 disks.
 install_couple_disk() {
  expect <<EOF
 
@@ -74,9 +84,11 @@ EOF
 # How many disks. Different interactive installers for one and more disks
 if [ `lsblk | grep disk | awk '{print $1}' | wc -l` -eq 1 ]; then
     echo "1 disk"
+    preinstall
     install_one_disk
 else
     echo "2 or more disks"
+    preinstall
     install_couple_disk
 fi
 
