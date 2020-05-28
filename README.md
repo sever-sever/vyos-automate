@@ -3,7 +3,7 @@
 ```
 curl -O https://raw.githubusercontent.com/sever-sever/vyos-automate/master/auto_install.sh
 ```
-### Execute script with 2 args - diskname and password
+Execute script with 2 args - diskname and password
 ```
 bash /home/vyos/auto_install.sh sda superpass
 ```
