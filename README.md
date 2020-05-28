@@ -2,4 +2,4 @@
 
 curl -O https://raw.githubusercontent.com/sever-sever/vyos-automate/master/auto_install.sh
 
-bash /home/vyos/auto_install.sh <diskname> <password> 
+bash /home/vyos/auto_install.sh \<diskname\> \<password\>
