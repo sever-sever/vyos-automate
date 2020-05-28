@@ -39,6 +39,7 @@ install_one_disk() {
     expect "Install the image on? *d*"  {send "$disk\r"}
     expect "Continue?"  {send "Yes\r"}
     expect "How big of a root partition should I create?" {send "\r"}
+    sleep 20
     expect "What would you like to name this image?" {send "\r"}
     expect "Which one should I copy to "  {send "/opt/vyatta/etc/config/config.boot\r"}
     expect "Enter password for user 'vyos':" {send "$password\r"}
@@ -61,6 +62,7 @@ install_couple_disk() {
     expect "Install the image on? *d*"  {send "$disk\r"}
     expect "Continue?"  {send "Yes\r"}
     expect "How big of a root partition should I create?" {send "\r"}
+    sleep 20
     expect "What would you like to name this image?" {send "\r"}
     expect "Which one should I copy to "  {send "/opt/vyatta/etc/config/config.boot\r"}
     expect "Enter password for user 'vyos':" {send "$password\r"}
