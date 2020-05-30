@@ -41,8 +41,7 @@ interfaces {
         smp-affinity auto
         speed auto
     }
-    loopback lo {
-    }
+    loopback lo
     vti vti1 {
         address 10.0.0.1/32
     }
@@ -87,8 +86,7 @@ protocols {
     bgp 65111 {
         address-family {
             ipv4-unicast {
-                network 100.100.0.0/24 {
-                }
+                network 100.100.0.0/24
             }
         }
         neighbor 10.0.0.2 {
@@ -98,7 +96,8 @@ protocols {
                         export UPLINK-OUT
                     }
                     soft-reconfiguration {
-                        inbound
+                        inbound {
+                        }
                     }
                 }
             }
@@ -109,7 +108,8 @@ protocols {
             }
         }
         parameters {
-            log-neighbor-changes
+            log-neighbor-changes {
+            }
         }
         timers {
             holdtime 4
@@ -118,8 +118,7 @@ protocols {
     }
     static {
         route 0.0.0.0/0 {
-            next-hop 192.168.122.1 {
-            }
+            next-hop 192.168.122.1
         }
     }
 }
@@ -145,7 +144,7 @@ system {
     login {
         user vyos {
             authentication {
-                encrypted-password $6$QxPS.uk6mfo$9QBSo8u1FkH16gMyAVhus6fU3LOzvLR9Z9.82m3tiHFAxTtIkhaZSWssSgzt4v4dGAL8rhVQxTg0oAG9/q11h/
+                encrypted-password "$6$Dr9UuNfD$S5F.oLIB8gtFtIn3l2PaWHad8S3hZJIGB7NFEhQnH/PvIR2/VIjXFkPBDDGnDVPym6qbp0bbO9/3PiV5ybAfl1"
                 plaintext-password ""
             }
             level admin
@@ -154,12 +153,9 @@ system {
     name-server 1.1.1.1
     name-server 8.8.8.8
     ntp {
-        server 0.pool.ntp.org {
-        }
-        server 1.pool.ntp.org {
-        }
-        server 2.pool.ntp.org {
-        }
+        server 0.pool.ntp.org
+        server 1.pool.ntp.org
+        server 2.pool.ntp.org
     }
     syslog {
         global {
@@ -173,8 +169,7 @@ system {
     }
     time-zone UTC
 }
-
-
 /* Warning: Do not remove the following line. */
-/* === vyatta-config-version: "broadcast-relay@1:cluster@1:config-management@1:conntrack-sync@1:conntrack@1:dhcp-relay@2:dhcp-server@5:dns-forwarding@1:firewall@5:ipsec@5:l2tp@1:mdns@1:nat@4:ntp@1:pptp@1:qos@1:quagga@6:snmp@1:ssh@1:system@9:vrrp@2:wanloadbalance@3:webgui@1:webproxy@1:webproxy@2:zone-policy@1" === */
+/* === vyatta-config-version: "broadcast-relay@1:cluster@1:config-management@1:conntrack-sync@1:conntrack@1:dhcp-relay@2:dhcp-server@5:dns-forwarding@1:firewall@5:ipsec@5:l2tp@1:mdns@1:
+nat@4:ntp@1:pptp@1:qos@1:quagga@6:snmp@1:ssh@1:system@9:vrrp@2:wanloadbalance@3:webgui@1:webproxy@1:webproxy@2:zone-policy@1" === */
 /* Release version: 1.2.5 */

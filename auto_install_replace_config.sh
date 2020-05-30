@@ -20,8 +20,11 @@ curl --url http://ftp.de.debian.org/debian/pool/main/e/expect/tcl-expect_5.45-6_
 # Install temp packages
 sudo dpkg -i /tmp/libtcl8.deb /tmp/tcl-expect.deb /tmp/expect.deb
 
+sleep 2
+echo
+echo "Download configuration from remote side"
 # Load configuration from remote URL
-curl --url $config_url --output /opt/vyatta/etc/config/config.boot
+sudo curl --url $config_url --output /opt/vyatta/etc/config/config.boot
 
 # Install VyOS with only one disk (detected) in the system.
 install_one_disk() {
