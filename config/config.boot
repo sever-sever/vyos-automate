@@ -136,9 +136,6 @@ system {
         device ttyS0 {
             speed 9600
         }
-        device ttyS1 {
-            speed 115200
-        }
     }
     host-name new-hostname-r
     login {
