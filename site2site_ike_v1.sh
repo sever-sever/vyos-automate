@@ -37,7 +37,7 @@ set vpn ipsec site-to-site peer $PEER_IP tunnel 0 esp-group '$ESP_GRP'
 set vpn ipsec site-to-site peer $PEER_IP tunnel 0 local prefix $LEFT_PREFIX
 set vpn ipsec site-to-site peer $PEER_IP tunnel 0 remote prefix $RIGHT_PREFIX
 
-### R1 if using NAT
+### R1. If using NAT
 set nat source rule 10 destination address $RIGHT_PREFIX
 set nat source rule 10 'exclude'
 set nat source rule 10 outbound-interface $IPSEC_IFACE
@@ -67,7 +67,7 @@ set vpn ipsec site-to-site peer $SOURCE_IP tunnel 0 esp-group '$ESP_GRP'
 set vpn ipsec site-to-site peer $SOURCE_IP tunnel 0 local prefix $RIGHT_PREFIX
 set vpn ipsec site-to-site peer $SOURCE_IP tunnel 0 remote prefix $LEFT_PREFIX
 
-### R2 is using NAT
+### R2. If using NAT
 set nat source rule 10 destination address $LEFT_PREFIX
 set nat source rule 10 'exclude'
 set nat source rule 10 outbound-interface $IPSEC_IFACE
