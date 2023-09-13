@@ -7,6 +7,7 @@ Date: 2023
 Description:
 Generate basic VyOS firewall rules. Variables are defined in config.yaml
 Change firewall.v4.ssh.port and prefixes in config.yaml
+
 Usage: python3 vyos_basic_firewall.py > vyos_firewall.conf
 """
 
