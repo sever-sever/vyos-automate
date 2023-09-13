@@ -38,12 +38,6 @@ set firewall ipv4 input filter rule {{ seq.loopback }} action 'accept'
 set firewall ipv4 input filter rule {{ seq.loopback }} inbound-interface interface-name 'lo'
 set firewall ipv4 input filter rule {{ seq.loopback }} source address '127.0.0.0/8'
 
-set firewall ipv4 input filter rule {{ seq.invalid_tcp_mss_drop }} description 'Drop incorrect TCP MSS sizes'
-set firewall ipv4 input filter rule {{ seq.invalid_tcp_mss_drop }} action 'drop'
-set firewall ipv4 input filter rule {{ seq.invalid_tcp_mss_drop }} protocol 'tcp'
-set firewall ipv4 input filter rule {{ seq.invalid_tcp_mss_drop }} tcp flags syn
-set firewall ipv4 input filter rule {{ seq.invalid_tcp_mss_drop }} tcp mss '1-500'
-
 set firewall ipv4 input filter rule {{ seq.stateful }} description 'Allow established/related'
 set firewall ipv4 input filter rule {{ seq.stateful }} action 'accept'
 set firewall ipv4 input filter rule {{ seq.stateful }} state established 'enable'
@@ -53,15 +47,11 @@ set firewall ipv4 input filter rule {{ seq.stateful_drop }} description 'Drop pa
 set firewall ipv4 input filter rule {{ seq.stateful_drop }} action 'drop'
 set firewall ipv4 input filter rule {{ seq.stateful_drop }} state invalid 'enable'
 
-set firewall ipv4 input filter rule {{ seq.icmp_request }} description 'Allow ICMP requests'
-set firewall ipv4 input filter rule {{ seq.icmp_request }} action 'accept'
-set firewall ipv4 input filter rule {{ seq.icmp_request }} icmp type-name 'echo-request'
-set firewall ipv4 input filter rule {{ seq.icmp_request }} protocol 'icmp'
-
-set firewall ipv4 input filter rule {{ seq.icmp_fragmentation_needed }} description 'Allow ICMP fragmentation needed to prevent PMTUD blackhole'
-set firewall ipv4 input filter rule {{ seq.icmp_fragmentation_needed }} action 'accept'
-set firewall ipv4 input filter rule {{ seq.icmp_fragmentation_needed }} icmp type '3'
-set firewall ipv4 input filter rule {{ seq.icmp_fragmentation_needed }} icmp code '4'
+set firewall ipv4 input filter rule {{ seq.invalid_tcp_mss_drop }} description 'Drop incorrect TCP MSS sizes'
+set firewall ipv4 input filter rule {{ seq.invalid_tcp_mss_drop }} action 'drop'
+set firewall ipv4 input filter rule {{ seq.invalid_tcp_mss_drop }} protocol 'tcp'
+set firewall ipv4 input filter rule {{ seq.invalid_tcp_mss_drop }} tcp flags syn
+set firewall ipv4 input filter rule {{ seq.invalid_tcp_mss_drop }} tcp mss '1-500'
 
 set firewall ipv4 input filter rule {{ seq.ssh_limit_drop }} description 'SSH limits'
 set firewall ipv4 input filter rule {{ seq.ssh_limit_drop }} action 'drop'
@@ -76,6 +66,16 @@ set firewall ipv4 input filter rule {{ seq.ssh }} action 'accept'
 set firewall ipv4 input filter rule {{ seq.ssh }} source group network-group '{{ firewall.v4.ssh.network_group }}'
 set firewall ipv4 input filter rule {{ seq.ssh }} protocol 'tcp'
 set firewall ipv4 input filter rule {{ seq.ssh }} destination port '{{ firewall.v4.ssh.port }}'
+
+set firewall ipv4 input filter rule {{ seq.icmp_request }} description 'Allow ICMP requests'
+set firewall ipv4 input filter rule {{ seq.icmp_request }} action 'accept'
+set firewall ipv4 input filter rule {{ seq.icmp_request }} icmp type-name 'echo-request'
+set firewall ipv4 input filter rule {{ seq.icmp_request }} protocol 'icmp'
+
+set firewall ipv4 input filter rule {{ seq.icmp_fragmentation_needed }} description 'Allow ICMP fragmentation needed to prevent PMTUD blackhole'
+set firewall ipv4 input filter rule {{ seq.icmp_fragmentation_needed }} action 'accept'
+set firewall ipv4 input filter rule {{ seq.icmp_fragmentation_needed }} icmp type '3'
+set firewall ipv4 input filter rule {{ seq.icmp_fragmentation_needed }} icmp code '4'
 
 set firewall ipv4 input filter rule {{ seq.bogons }} description 'Drop bogons networks'
 set firewall ipv4 input filter rule {{ seq.bogons }} action 'drop'

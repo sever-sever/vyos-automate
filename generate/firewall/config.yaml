@@ -3,9 +3,9 @@ firewall:
     input:
       default_action: drop
       seq:
-        stateful: 10
-        stateful_drop: 20
-        loopback: 30
+        loopback: 10
+        stateful: 20
+        stateful_drop: 30
         invalid_tcp_mss_drop: 40
         ssh_limit_drop: 50
         ssh: 60
