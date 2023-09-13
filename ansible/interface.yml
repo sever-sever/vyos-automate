@@ -1,0 +1,20 @@
+---
+
+- hosts: r4
+
+  gather_facts: 'no'
+
+
+  tasks:
+    - name: Gather interface facts
+      vyos_facts:
+        gather_subset:
+          - '!all'
+          - '!min'
+        gather_network_resources:
+          - interfaces
+      register: ansible_net_interfaces
+
+    - name: Display interface facts
+      debug:
+        var: ansible_net_interfaces
