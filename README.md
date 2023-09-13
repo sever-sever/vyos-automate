@@ -1,4 +1,6 @@
 # vyos-automate
 
-IPSEC site2site ike-v1
-Ansible
+There are a few useful scripts to automate VyOS
+
+ansible - bacic ansible script
+generate - generate VyOS configurations
