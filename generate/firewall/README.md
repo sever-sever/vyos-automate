@@ -1,6 +1,6 @@
 Usage
 ```
-s./vyos_basic_firewall.py
+$./vyos_basic_firewall.py
 
 set firewall group network-group bogons-v4 description 'Bogons Networks'
 set firewall group network-group bogons-v4 network 0.0.0.0/8
