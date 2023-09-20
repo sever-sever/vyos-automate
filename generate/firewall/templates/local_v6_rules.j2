@@ -1,0 +1,56 @@
+{% if firewall.v6.enable %}
+# Input rules for IPv6
+set firewall ipv6 input filter default-action '{{ firewall.v6.input.default_action }}'
+{% set seq = firewall.v6.input.seq %}
+
+set firewall ipv6 input filter rule {{ seq.loopback }} description 'Allow loopback'
+set firewall ipv6 input filter rule {{ seq.loopback }} action 'accept'
+set firewall ipv6 input filter rule {{ seq.loopback }} inbound-interface interface-name 'lo'
+set firewall ipv6 input filter rule {{ seq.loopback }} source address '::/128'
+
+set firewall ipv6 input filter rule {{ seq.stateful }} description 'Allow established/related'
+set firewall ipv6 input filter rule {{ seq.stateful }} action 'accept'
+set firewall ipv6 input filter rule {{ seq.stateful }} state established 'enable'
+set firewall ipv6 input filter rule {{ seq.stateful }} state related 'enable'
+
+set firewall ipv6 input filter rule {{ seq.stateful_drop }} description 'Drop packets with state invalid'
+set firewall ipv6 input filter rule {{ seq.stateful_drop }} action 'drop'
+set firewall ipv6 input filter rule {{ seq.stateful_drop }} state invalid 'enable'
+
+set firewall ipv6 input filter rule {{ seq.invalid_tcp_mss_drop }} description 'Drop incorrect TCP MSS sizes'
+set firewall ipv6 input filter rule {{ seq.invalid_tcp_mss_drop }} action 'drop'
+set firewall ipv6 input filter rule {{ seq.invalid_tcp_mss_drop }} protocol 'tcp'
+set firewall ipv6 input filter rule {{ seq.invalid_tcp_mss_drop }} tcp flags syn
+set firewall ipv6 input filter rule {{ seq.invalid_tcp_mss_drop }} tcp mss '1-500'
+
+set firewall ipv6 input filter rule {{ seq.ssh_limit_drop }} description 'SSH limits'
+set firewall ipv6 input filter rule {{ seq.ssh_limit_drop }} action 'drop'
+set firewall ipv6 input filter rule {{ seq.ssh_limit_drop }} destination port '{{ firewall.v6.ssh.port }}'
+set firewall ipv6 input filter rule {{ seq.ssh_limit_drop }} protocol 'tcp'
+set firewall ipv6 input filter rule {{ seq.ssh_limit_drop }} recent count '3'
+set firewall ipv6 input filter rule {{ seq.ssh_limit_drop }} recent time minute
+set firewall ipv6 input filter rule {{ seq.ssh_limit_drop }} state new 'enable'
+
+set firewall ipv6 input filter rule {{ seq.ssh }} description 'Allow SSH from trusted networks'
+set firewall ipv6 input filter rule {{ seq.ssh }} action 'accept'
+set firewall ipv6 input filter rule {{ seq.ssh }} source group network-group '{{ firewall.v6.ssh.network_group }}'
+set firewall ipv6 input filter rule {{ seq.ssh }} protocol 'tcp'
+set firewall ipv6 input filter rule {{ seq.ssh }} destination port '{{ firewall.v6.ssh.port }}'
+
+set firewall ipv6 input filter rule {{ seq.icmp_request }} description 'Allow ICMP requests'
+set firewall ipv6 input filter rule {{ seq.icmp_request }} action 'accept'
+set firewall ipv6 input filter rule {{ seq.icmp_request }} icmp type-name 'echo-request'
+set firewall ipv6 input filter rule {{ seq.icmp_request }} protocol 'ipv6-icmp'
+
+set firewall ipv6 input filter rule {{ seq.icmp_fragmentation_needed }} description 'Allow ICMP fragmentation needed to prevent PMTUD blackhole'
+set firewall ipv6 input filter rule {{ seq.icmp_fragmentation_needed }} action 'accept'
+set firewall ipv6 input filter rule {{ seq.icmp_fragmentation_needed }} icmp type '3'
+set firewall ipv6 input filter rule {{ seq.icmp_fragmentation_needed }} icmp code '4'
+
+set firewall ipv6 input filter rule {{ seq.bogons }} description 'Drop bogons networks'
+set firewall ipv6 input filter rule {{ seq.bogons }} action 'drop'
+set firewall ipv6 input filter rule {{ seq.bogons }} source group network-group '{{ firewall.v6.bogon.network_group }}'
+
+set firewall ipv6 input filter rule 10000 description 'Drop everything else'
+set firewall ipv6 input filter rule 10000 action 'drop'
+{% endif %}

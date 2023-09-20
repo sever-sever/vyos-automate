@@ -1,0 +1,5 @@
+{% if firewall.v6.enable %}
+# Output rules IPv6
+set firewall ipv6 output filter default-action 'accept'
+set firewall ipv6 output filter rule 10000 action 'accept'
+{% endif %}

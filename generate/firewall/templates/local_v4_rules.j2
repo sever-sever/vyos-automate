@@ -1,4 +1,5 @@
-# Input rules
+{% if firewall.v4.enable %}
+# Input rules for IPv4
 set firewall ipv4 input filter default-action '{{ firewall.v4.input.default_action }}'
 {% set seq = firewall.v4.input.seq %}
 
@@ -52,3 +53,4 @@ set firewall ipv4 input filter rule {{ seq.bogons }} source group network-group 
 
 set firewall ipv4 input filter rule 10000 description 'Drop everything else'
 set firewall ipv4 input filter rule 10000 action 'drop'
+{% endif %}

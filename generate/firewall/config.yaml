@@ -1,5 +1,6 @@
 firewall:
   v4:
+    enable: true
     input:
       default_action: drop
       seq:
@@ -45,14 +46,34 @@ firewall:
 
 
   v6:
+    enable: true
+    input:
+      default_action: drop
+      seq:
+        loopback: 10
+        stateful: 20
+        stateful_drop: 30
+        invalid_tcp_mss_drop: 40
+        ssh_limit_drop: 50
+        ssh: 60
+        icmp_request: 70
+        icmp_fragmentation_needed: 80
+        bogons: 90
     bogon:
+      description: Bogons Networks V6
       network_group: bogons-v6
       prefixes:
-        - 2001:db8::/32
         - 2001:10::/28
         - 2001:20::/28
         - 2001:db8::/32
         - fc00::/7
         - fe80::/10
-        - feC0::/10
+        - fec0::/10
         - ff00::/8
+
+    ssh:
+      description: Allow SSH from those networks
+      network_group: ssh-enable-networks-v6
+      port: 22
+      prefixes:
+        - 2001:db8:1111::/64
