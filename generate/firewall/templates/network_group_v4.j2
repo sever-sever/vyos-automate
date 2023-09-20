@@ -1,0 +1,9 @@
+set firewall group network-group {{ firewall.v4.bogon.network_group }} description '{{ firewall.v4.bogon.description }}'
+{% for prefix in firewall.v4.bogon.prefixes -%}
+set firewall group network-group {{ firewall.v4.bogon.network_group }} network {{ prefix }}
+{% endfor -%}
+
+set firewall group network-group {{ firewall.v4.ssh.network_group }} description '{{ firewall.v4.ssh.description }}'
+{% for prefix in firewall.v4.ssh.prefixes -%}
+set firewall group network-group {{ firewall.v4.ssh.network_group }} network {{ prefix }}
+{%- endfor %}
