@@ -1,0 +1,29 @@
+common:
+  psk_name: PSK
+  secret: 1234567890
+  esp:
+    group: ESP-group
+    lifetime: 3600
+    encryption: aes256
+    hash: sha1
+  ike:
+    version: 2
+    group: IKE-group
+    lifetime: 28800
+    encryption: aes256
+    hash: sha1
+    dh_group: 2
+
+left:
+  vyos_version: 1.5 # 1.3, 1.4 or 1.5
+  connection_name: OFFICE-A
+  wan_address: 192.0.2.1
+  prefix: 100.64.1.0/24
+  interface: eth0
+
+right:
+  vyos_version: 1.4 # 1.3, 1.4 or 1.5
+  connection_name: OFFICE-B
+  wan_address: 192.0.2.2
+  prefix: 100.64.2.0/24
+  interface: eth0

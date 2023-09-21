@@ -1,0 +1,107 @@
+{% if left.vyos_version == 1.4 or left.vyos_version == 1.5 %}
+# LEFT CONFIG {{ left.vyos_version }}
+set vpn ipsec authentication psk {{ common.psk_name }} id {{ left.wan_address }}
+set vpn ipsec authentication psk {{ common.psk_name }} id {{ right.wan_address }}
+set vpn ipsec authentication psk {{ common.psk_name }} secret '{{ common.secret }}'
+set vpn ipsec esp-group {{ common.esp.group }} lifetime {{ common.esp.lifetime }}
+set vpn ipsec esp-group {{ common.esp.group }} mode 'tunnel'
+set vpn ipsec esp-group {{ common.esp.group }} pfs 'enable'
+set vpn ipsec esp-group {{ common.esp.group }} proposal 1 encryption {{ common.esp.encryption }}
+set vpn ipsec esp-group {{ common.esp.group }} proposal 1 hash {{ common.esp.hash }}
+set vpn ipsec ike-group {{ common.ike.group }} key-exchange ikev{{ common.ike.version }}
+set vpn ipsec ike-group {{ common.ike.group }} lifetime {{ common.ike.lifetime }}
+set vpn ipsec ike-group {{ common.ike.group }} proposal 1 encryption {{ common.ike.encryption }}
+set vpn ipsec ike-group {{ common.ike.group }} proposal 1 hash {{ common.ike.hash }}
+set vpn ipsec interface {{ left.interface }}
+set vpn ipsec site-to-site peer {{ right.connection_name }} authentication local-id {{ left.wan_address }}
+set vpn ipsec site-to-site peer {{ right.connection_name }} authentication mode 'pre-shared-secret'
+set vpn ipsec site-to-site peer {{ right.connection_name }} authentication remote-id {{ right.wan_address }}
+set vpn ipsec site-to-site peer {{ right.connection_name }} connection-type 'initiate'
+set vpn ipsec site-to-site peer {{ right.connection_name }} ike-group {{ common.ike.group }}
+set vpn ipsec site-to-site peer {{ right.connection_name }} local-address {{ left.wan_address }}
+set vpn ipsec site-to-site peer {{ right.connection_name }} remote-address {{ right.wan_address }}
+set vpn ipsec site-to-site peer {{ right.connection_name }} tunnel 0 esp-group {{ common.esp.group }}
+set vpn ipsec site-to-site peer {{ right.connection_name }} tunnel 0 local prefix {{ left.prefix }}
+set vpn ipsec site-to-site peer {{ right.connection_name }} tunnel 0 remote prefix {{ right.prefix }}
+{% endif %}
+
+{% if left.vyos_version == 1.3 %}
+# LEFT CONFIG {{ left.vyos_version }}
+set vpn ipsec esp-group {{ common.esp.group }} compression 'disable'
+set vpn ipsec esp-group {{ common.esp.group }} lifetime {{ common.esp.lifetime }}
+set vpn ipsec esp-group {{ common.esp.group }} mode 'tunnel'
+set vpn ipsec esp-group {{ common.esp.group }} pfs 'enable'
+set vpn ipsec esp-group {{ common.esp.group }} proposal 1 encryption {{ common.esp.encryption }}
+set vpn ipsec esp-group {{ common.esp.group }} proposal 1 hash {{ common.esp.hash }}
+set vpn ipsec ike-group {{ common.ike.group }} key-exchange ikev{{ common.ike.version }}
+set vpn ipsec ike-group {{ common.ike.group }} lifetime {{ common.ike.lifetime }}
+set vpn ipsec ike-group {{ common.ike.group }} proposal 1 encryption {{ common.ike.encryption }}
+set vpn ipsec ike-group {{ common.ike.group }} proposal 1 hash {{ common.ike.hash }}
+set vpn ipsec ipsec-interfaces interface {{ right.interface }}
+set vpn ipsec site-to-site peer {{ right.wan_address }} authentication id {{ left.wan_address }}
+set vpn ipsec site-to-site peer {{ right.wan_address }} authentication mode 'pre-shared-secret'
+set vpn ipsec site-to-site peer {{ right.wan_address }} authentication pre-shared-secret '{{ common.secret }}'
+set vpn ipsec site-to-site peer {{ right.wan_address }} authentication remote-id {{ right.wan_address }}
+set vpn ipsec site-to-site peer {{ right.wan_address }} connection-type 'respond'
+set vpn ipsec site-to-site peer {{ right.wan_address }} ike-group {{ common.ike.group }}
+set vpn ipsec site-to-site peer {{ right.wan_address }} local-address {{ left.wan_address }}
+set vpn ipsec site-to-site peer {{ right.wan_address }} tunnel 0 allow-nat-networks 'disable'
+set vpn ipsec site-to-site peer {{ right.wan_address }} tunnel 0 allow-public-networks 'disable'
+set vpn ipsec site-to-site peer {{ right.wan_address }} tunnel 0 esp-group {{ common.esp.group }}
+set vpn ipsec site-to-site peer {{ right.wan_address }} tunnel 0 local prefix {{ left.prefix }}
+set vpn ipsec site-to-site peer {{ right.wan_address }} tunnel 0 remote prefix {{ right.prefix }}
+{% endif %}
+
+{% if right.vyos_version == 1.4 or right.vyos_version == 1.5 %}
+# RIGHT CONFIG {{ right.vyos_version }}
+set vpn ipsec authentication psk PSK id {{ left.wan_address }}
+set vpn ipsec authentication psk PSK id {{ right.wan_address }}
+set vpn ipsec authentication psk PSK secret '{{ common.secret }}'
+set vpn ipsec esp-group {{ common.esp.group }} lifetime {{ common.esp.lifetime }}
+set vpn ipsec esp-group {{ common.esp.group }} mode 'tunnel'
+set vpn ipsec esp-group {{ common.esp.group }} pfs 'enable'
+set vpn ipsec esp-group {{ common.esp.group }} proposal 1 encryption {{ common.esp.encryption }}
+set vpn ipsec esp-group {{ common.esp.group }} proposal 1 hash {{ common.esp.hash }}
+set vpn ipsec ike-group {{ common.ike.group }} key-exchange ikev{{ common.ike.version }}
+set vpn ipsec ike-group {{ common.ike.group }} lifetime {{ common.ike.lifetime }}
+set vpn ipsec ike-group {{ common.ike.group }} proposal 1 encryption {{ common.ike.encryption }}
+set vpn ipsec ike-group {{ common.ike.group }} proposal 1 hash {{ common.ike.hash }}
+set vpn ipsec interface {{ right.interface }}
+set vpn ipsec site-to-site peer {{ left.connection_name }} authentication local-id {{ right.wan_address }}
+set vpn ipsec site-to-site peer {{ left.connection_name }} authentication mode 'pre-shared-secret'
+set vpn ipsec site-to-site peer {{ left.connection_name }} authentication remote-id {{ left.wan_address }}
+set vpn ipsec site-to-site peer {{ left.connection_name }} connection-type 'respond'
+set vpn ipsec site-to-site peer {{ left.connection_name }} ike-group {{ common.ike.group }}
+set vpn ipsec site-to-site peer {{ left.connection_name }} local-address {{ right.wan_address }}
+set vpn ipsec site-to-site peer {{ left.connection_name }} remote-address {{ left.wan_address }}
+set vpn ipsec site-to-site peer {{ left.connection_name }} tunnel 0 esp-group {{ common.esp.group }}
+set vpn ipsec site-to-site peer {{ left.connection_name }} tunnel 0 local prefix {{ right.prefix }}
+set vpn ipsec site-to-site peer {{ left.connection_name }} tunnel 0 remote prefix {{ left.prefix }}
+{% endif %}
+
+{% if right.vyos_version == 1.3 %}
+# RIGHT CONFIG {{ right.vyos_version }}
+set vpn ipsec esp-group {{ common.esp.group }} compression 'disable'
+set vpn ipsec esp-group {{ common.esp.group }} lifetime {{ common.esp.lifetime }}
+set vpn ipsec esp-group {{ common.esp.group }} mode 'tunnel'
+set vpn ipsec esp-group {{ common.esp.group }} pfs 'enable'
+set vpn ipsec esp-group {{ common.esp.group }} proposal 1 encryption {{ common.esp.encryption }}
+set vpn ipsec esp-group {{ common.esp.group }} proposal 1 hash {{ common.esp.hash }}
+set vpn ipsec ike-group {{ common.ike.group }} key-exchange ikev{{ common.ike.version }}
+set vpn ipsec ike-group {{ common.ike.group }} lifetime {{ common.ike.lifetime }}
+set vpn ipsec ike-group {{ common.ike.group }} proposal 1 encryption {{ common.ike.encryption }}
+set vpn ipsec ike-group {{ common.ike.group }} proposal 1 hash {{ common.ike.hash }}
+set vpn ipsec ipsec-interfaces interface {{ right.interface }}
+set vpn ipsec site-to-site peer {{ left.wan_address }} authentication id {{ right.wan_address }}
+set vpn ipsec site-to-site peer {{ left.wan_address }} authentication mode 'pre-shared-secret'
+set vpn ipsec site-to-site peer {{ left.wan_address }} authentication pre-shared-secret '{{ common.secret }}'
+set vpn ipsec site-to-site peer {{ left.wan_address }} authentication remote-id {{ left.wan_address }}
+set vpn ipsec site-to-site peer {{ left.wan_address }} connection-type 'respond'
+set vpn ipsec site-to-site peer {{ left.wan_address }} ike-group {{ common.ike.group }}
+set vpn ipsec site-to-site peer {{ left.wan_address }} local-address {{ right.wan_address }}
+set vpn ipsec site-to-site peer {{ left.wan_address }} tunnel 0 allow-nat-networks 'disable'
+set vpn ipsec site-to-site peer {{ left.wan_address }} tunnel 0 allow-public-networks 'disable'
+set vpn ipsec site-to-site peer {{ left.wan_address }} tunnel 0 esp-group {{ common.esp.group }}
+set vpn ipsec site-to-site peer {{ left.wan_address }} tunnel 0 local prefix {{ right.prefix }}
+set vpn ipsec site-to-site peer {{ left.wan_address }} tunnel 0 remote prefix {{ left.prefix }}
+{% endif %}
