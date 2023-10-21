@@ -6,7 +6,7 @@ Author: Viacheslav Hletenko
 Date: 2023
 Description:
 Configure VyOS via API
-Add configiration to file config.conf
+Add configiration to file config_vyos.conf
 
 Requires VyOS API configuration:
 
@@ -18,6 +18,7 @@ Usage: python3 configure_via_api.py
 
 import json
 import re
+import yaml
 
 import requests
 import urllib3
@@ -78,14 +79,18 @@ def configure_vyos(address, key, data):
 
 if __name__ == '__main__':
 
+    # Get connection parameters from config.yaml
+    with open('config.yaml', 'r', encoding='utf-8') as file:
+        conf = yaml.load(file, Loader=yaml.FullLoader)
+
     # Set VyOS host address and API key
-    vyos_host = '192.168.122.14'
-    vyos_api_key = 'foo'
+    vyos_host = conf.get('vyos_host')
+    vyos_api_key = conf.get('vyos_api_key')
 
-    # Read configuration from config.conf
-    with open('config.conf', 'r') as file:
-        commands = file.read()
+    # Read configuration from config_vyos.conf
+    with open('config_vyos.conf', 'r', encoding='utf-8') as file:
+        config_commands = file.read()
 
-    config_json = convert_to_json_commands(commands)
+    config_json = convert_to_json_commands(config_commands)
 
     configure_vyos(address=vyos_host, key=vyos_api_key, data=config_json)

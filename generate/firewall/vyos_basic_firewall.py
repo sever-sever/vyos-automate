@@ -32,7 +32,10 @@ def generate_firewall_rules(config: dict, template: Template) -> str:
 
 
 if __name__ == "__main__":
-    config = yaml.load(open('config.yaml'), Loader=yaml.FullLoader)
+
+    with open('config.yaml', 'r', encoding='utf-8') as file:
+        conf = yaml.load(file, Loader=yaml.FullLoader)
+
     env = Environment(loader=FileSystemLoader('templates'))
 
     network_group_v4 = env.get_template('network_group_v4.j2')
@@ -43,10 +46,10 @@ if __name__ == "__main__":
     output_v6_rules = env.get_template('output_v6_rules.j2')
 
     # IPv4
-    print(generate_firewall_rules(config, network_group_v4))
-    print(generate_firewall_rules(config, local_v4_rules))
-    print(generate_firewall_rules(config, output_v4_rules))
+    print(generate_firewall_rules(conf, network_group_v4))
+    print(generate_firewall_rules(conf, local_v4_rules))
+    print(generate_firewall_rules(conf, output_v4_rules))
     # IPv6
-    print(generate_firewall_rules(config, network_group_v6))
-    print(generate_firewall_rules(config, local_v6_rules))
-    print(generate_firewall_rules(config, output_v6_rules))
+    print(generate_firewall_rules(conf, network_group_v6))
+    print(generate_firewall_rules(conf, local_v6_rules))
+    print(generate_firewall_rules(conf, output_v6_rules))

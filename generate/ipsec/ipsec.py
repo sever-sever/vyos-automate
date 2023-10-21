@@ -31,9 +31,11 @@ def generate_config(config: dict, template: Template) -> str:
 
 
 if __name__ == "__main__":
-    config = yaml.load(open('config.yaml'), Loader=yaml.FullLoader)
+
+    with open('config.yaml', 'r', encoding='utf-8') as file:
+        conf = yaml.load(file, Loader=yaml.FullLoader)
+
     env = Environment(loader=FileSystemLoader('templates'), trim_blocks=True)
 
     ipsec = env.get_template('ipsec.j2')
-    print(generate_config(config, ipsec))
-
+    print(generate_config(conf, ipsec))
