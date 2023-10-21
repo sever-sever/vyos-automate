@@ -18,6 +18,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint
+    - name: Install extra dependencies
+      run: |
+        pip install requests urllib3 PyYAML jinja2
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
