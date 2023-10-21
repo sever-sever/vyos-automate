@@ -47,7 +47,7 @@ def convert_to_json_commands(input_str):
     return json.dumps(result, indent=4)
 
 
-def configure_vyos(address, key, data):
+def configure_vyos(address, key, data, timeout=30):
     """
     Configure a VyOS device using the provided data.
 
@@ -67,7 +67,7 @@ def configure_vyos(address, key, data):
     payload = {'data': data, 'key': key}
 
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-    response = requests.post(url, headers=headers, data=payload, verify=False)
+    response = requests.post(url, headers=headers, data=payload, verify=False, timeout=timeout)
 
     if response.status_code == 200:
         print("Configuration successful.")
@@ -93,4 +93,4 @@ if __name__ == '__main__':
 
     config_json = convert_to_json_commands(config_commands)
 
-    configure_vyos(address=vyos_host, key=vyos_api_key, data=config_json)
+    configure_vyos(address=vyos_host, key=vyos_api_key, data=config_json, timeout=30)
