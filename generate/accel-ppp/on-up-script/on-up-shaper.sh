@@ -2,7 +2,7 @@
 #
 # Parse Cisco RADIUS attributes:
 # Cisco-AVPair ip:sub-qos-policy-out=my-policy-10mbps-down
-# Cisco-AVPair ip:sub-qos-policy-in=my-policy-10mbps-in
+# Cisco-AVPair ip:sub-qos-policy-in=my-policy-10mbps-up
 #
 # Set speed based on the policy value (in mbps)
 # The values of policy are defined in the policy.conf
