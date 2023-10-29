@@ -1,6 +1,6 @@
 ---
 
-- hosts: r4
+- hosts: vyos_hosts
   gather_facts: 'no'
 
   tasks:
@@ -8,3 +8,5 @@
         name: addressing
     - import_role:
         name: banner
+    - import_role:
+        name: routing

@@ -1,0 +1,10 @@
+set interfaces loopback lo address '{{ router_id }}/32'
+
+{% for interface in interfaces %}
+{%     if interface.address is defined %}
+set interfaces {{ interface.type }} {{ interface.name }} address '{{ interface.address }}/{{ interface.prefix }}'
+{%     endif %}
+{%     if interface.description is defined %}
+set interfaces {{ interface.type }} {{ interface.name }} description '{{ interface.description }}'
+{%     endif %}
+{% endfor %}

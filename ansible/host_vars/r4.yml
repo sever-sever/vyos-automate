@@ -1,1 +1,25 @@
 router_id: 192.0.2.14
+
+interfaces:
+  - name: eth0
+    address: 192.168.122.14
+    prefix: 24
+    description: WAN
+    type: ethernet
+
+  - name: eth1
+    address: 192.0.2.1
+    prefix: 24
+    description: LAN
+    type: ethernet
+
+  - name: dum0
+    address: 203.0.113.1
+    prefix: 32
+    description: dum0 ospf
+    type: dummy
+
+ospf:
+  networks:
+    - 192.0.2.0/24
+    - 203.0.113.1/32

@@ -1,6 +1,5 @@
 ---
 
-- name: Configure loopback address on {{ inventory_hostname }}
+- name: Configure interface address on {{ inventory_hostname }}
   vyos_config:
-    lines:
-      - set interfaces loopback lo address '{{ router_id }}/32'
+    src: interfaces.j2
