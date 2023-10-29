@@ -1,6 +1,8 @@
+{% if routing.ospf.enable %}
 set protocols ospf parameters router-id {{ router_id }}
 set protocols ospf redistribute connected metric-type '2'
 
-{% for network in ospf.networks %}
+{%     for network in ospf.networks %}
 set protocols ospf area {{ routing.ospf.area }} network '{{ network }}'
-{% endfor %}
+{%     endfor %}
+{% endif %}

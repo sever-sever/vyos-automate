@@ -3,3 +3,7 @@
 - name: Configure OSPF on {{ inventory_hostname }}
   vyos_config:
     src: ospf.j2
+
+- name: Configure ISIS on {{ inventory_hostname }}
+  vyos_config:
+    src: isis.j2
