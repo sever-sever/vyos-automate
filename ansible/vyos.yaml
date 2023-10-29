@@ -1,0 +1,10 @@
+---
+
+- hosts: r4
+  gather_facts: 'no'
+
+  tasks:
+    - import_role:
+        name: addressing
+    - import_role:
+        name: banner

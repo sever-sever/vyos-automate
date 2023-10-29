@@ -1,0 +1,9 @@
+---
+
+- name: Add post-login banner on {{ inventory_hostname }}
+  vyos.vyos.vyos_banner:
+    banner: post-login
+    text: |
+      Hello,
+      VyOS World!
+    state: present

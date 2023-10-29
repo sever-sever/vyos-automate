@@ -1,0 +1,6 @@
+---
+
+- name: Configure loopback address on {{ inventory_hostname }}
+  vyos_config:
+    lines:
+      - set interfaces loopback lo address '{{ router_id }}/32'
