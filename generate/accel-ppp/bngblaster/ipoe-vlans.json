@@ -1,0 +1,29 @@
+{
+    "interfaces": {
+        "access": [
+        {
+            "interface": "enp6s0",
+            "type": "ipoe",
+            "outer-vlan-min": 23,
+            "outer-vlan-max": 4000,
+            "vlan-mode": "N:1"
+        }
+    ]
+    },
+    "dhcp": {
+        "enable": true
+    },
+    "dhcpv6": {
+        "enable": true
+    },
+    "access-line": {
+        "agent-remote-id": "VyOS.{session-global}",
+        "agent-circuit-id": "0.0.0.0/0.0.0.0 enp6s 0:{session-global}"
+    },
+    "sessions": {
+        "count": 8000,
+        "max-outstanding": 14000,
+        "start-rate": 400,
+        "stop-rate": 400
+    }
+}
