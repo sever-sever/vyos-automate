@@ -1,0 +1,22 @@
+{
+    "interfaces": {
+        "access": [
+        {
+            "interface": "enp6s0",
+            "type": "ipoe",
+            "outer-vlan": 23,
+            "vlan-mode": "N:1"
+        }
+    ]
+    },
+    "dhcp": {
+        "enable": true
+    },
+    "dhcpv6": {
+        "enable": true
+    },
+    "access-line": {
+        "agent-remote-id": "VyOS.{session-global}",
+        "agent-circuit-id": "0.0.0.0/0.0.0.0 enp6s 0:{session-global}"
+    }
+}

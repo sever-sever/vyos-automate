@@ -1,0 +1,60 @@
+{
+    "interfaces": {
+        "access": [
+            {
+                "__comment__": "PPPoE Client",
+                "interface": "enp6s0",
+                "type": "pppoe",
+                "authentication-protocol": "PAP",
+                "outer-vlan": 23,
+                "vlan-mode": "N:1"
+            }
+        ]
+    },
+    "pppoe": {
+        "reconnect": true,
+        "discovery-timeout": 3,
+        "discovery-retry": 10,
+        "host-uniq" : true
+    },
+    "ppp": {
+        "mru": 1492,
+        "authentication": {
+            "username": "user{session-global}@vyos.net",
+            "password": "test",
+            "timeout": 5,
+            "retry": 30
+        },
+        "lcp": {
+            "conf-request-timeout": 1,
+            "conf-request-retry": 10,
+            "keepalive-interval": 30,
+            "keepalive-retry": 3
+        },
+        "ipcp": {
+            "enable": true,
+            "request-ip": true,
+            "request-dns1": true,
+            "request-dns2": true,
+            "conf-request-timeout": 1,
+            "conf-request-retry": 10
+        },
+        "ip6cp": {
+            "enable": true,
+            "conf-request-timeout": 1,
+            "conf-request-retry": 10
+        }
+    },
+    "dhcpv6": {
+        "enable": false
+    },
+    "access-line": {
+        "agent-remote-id": "VYOS.NET.{session-global}",
+        "agent-circuit-id": "0.0.0.0/0.0.0.0 eth {session-global}",
+        "rate-up": 1024,
+        "rate-down": 16384
+    },
+    "session-traffic": {
+        "ipv4-pps": 1
+    }
+}
