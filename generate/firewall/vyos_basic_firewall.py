@@ -32,17 +32,18 @@ def generate_firewall_rules(config: dict, template: Template) -> str:
 
 
 if __name__ == "__main__":
-    with open("config.yaml", "r", encoding="utf-8") as file:
+
+    with open('config.yaml', 'r', encoding='utf-8') as file:
         conf = yaml.load(file, Loader=yaml.FullLoader)
 
-    env = Environment(loader=FileSystemLoader("templates"))
+    env = Environment(loader=FileSystemLoader('templates'))
 
-    network_group_v4 = env.get_template("network_group_v4.j2")
-    local_v4_rules = env.get_template("local_v4_rules.j2")
-    output_v4_rules = env.get_template("output_v4_rules.j2")
-    network_group_v6 = env.get_template("network_group_v6.j2")
-    local_v6_rules = env.get_template("local_v6_rules.j2")
-    output_v6_rules = env.get_template("output_v6_rules.j2")
+    network_group_v4 = env.get_template('network_group_v4.j2')
+    local_v4_rules = env.get_template('local_v4_rules.j2')
+    output_v4_rules = env.get_template('output_v4_rules.j2')
+    network_group_v6 = env.get_template('network_group_v6.j2')
+    local_v6_rules = env.get_template('local_v6_rules.j2')
+    output_v6_rules = env.get_template('output_v6_rules.j2')
 
     # IPv4
     print(generate_firewall_rules(conf, network_group_v4))
