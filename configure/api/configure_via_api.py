@@ -34,7 +34,7 @@ def convert_to_json_commands(input_str):
     Returns:
         str: A JSON string representing the commands in a structured format.
     """
-    commands = input_str.strip().split('\n')
+    commands = input_str.strip().split("\n")
     result = []
 
     for command in commands:
@@ -63,11 +63,13 @@ def configure_vyos(address, key, data, timeout=30):
         Exception: If the configuration fails.
     """
     headers = {}
-    url = f'https://{address}/configure'
-    payload = {'data': data, 'key': key}
+    url = f"https://{address}/configure"
+    payload = {"data": data, "key": key}
 
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-    response = requests.post(url, headers=headers, data=payload, verify=False, timeout=timeout)
+    response = requests.post(
+        url, headers=headers, data=payload, verify=False, timeout=timeout
+    )
 
     if response.status_code == 200:
         print("Configuration successful.")
@@ -77,18 +79,17 @@ def configure_vyos(address, key, data, timeout=30):
         print("Response:", response.text)
 
 
-if __name__ == '__main__':
-
+if __name__ == "__main__":
     # Get connection parameters from config.yaml
-    with open('config.yaml', 'r', encoding='utf-8') as file:
+    with open("config.yaml", "r", encoding="utf-8") as file:
         conf = yaml.load(file, Loader=yaml.FullLoader)
 
     # Set VyOS host address and API key
-    vyos_host = conf.get('vyos_host')
-    vyos_api_key = conf.get('vyos_api_key')
+    vyos_host = conf.get("vyos_host")
+    vyos_api_key = conf.get("vyos_api_key")
 
     # Read configuration from config_vyos.conf
-    with open('config_vyos.conf', 'r', encoding='utf-8') as file:
+    with open("config_vyos.conf", "r", encoding="utf-8") as file:
         config_commands = file.read()
 
     config_json = convert_to_json_commands(config_commands)
