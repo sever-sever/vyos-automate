@@ -67,7 +67,9 @@ def configure_vyos(address, key, data, timeout=30):
     payload = {'data': data, 'key': key}
 
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-    response = requests.post(url, headers=headers, data=payload, verify=False, timeout=timeout)
+    response = requests.post(
+        url, headers=headers, data=payload, verify=False, timeout=timeout
+    )
 
     if response.status_code == 200:
         print("Configuration successful.")
