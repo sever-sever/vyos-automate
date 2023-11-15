@@ -1,0 +1,29 @@
+
+vyos_version: 1.5
+
+interface: vtun10
+subnet: 10.10.0.0/24
+domain: vyos.net
+
+encryption:
+  cipher: aes256gcm
+
+hash: sha256
+
+connection:
+  protocol: udp
+  local:
+    address: 203.0.113.1
+    port: 1194
+
+route:
+  push:
+    - 192.0.2.0/24
+    - 100.64.0.0/24
+
+options:
+  - mssfix 1420
+
+name_servers:
+  - 10.0.0.1
+  - 10.0.0.2

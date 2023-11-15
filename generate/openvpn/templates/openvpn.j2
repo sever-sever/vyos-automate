@@ -1,0 +1,72 @@
+{% if vyos_version == 1.4 or vyos_version == 1.5 %}
+# OpenVPN Server CONFIG {{ vyos_version }}
+set interfaces openvpn vtun10 encryption cipher {{ encryption.cipher }}
+set interfaces openvpn {{ interface }} hash {{ hash }}
+set interfaces openvpn {{ interface }} local-host {{ connection.local.address }}
+set interfaces openvpn {{ interface }} local-port {{ connection.local.port }}
+set interfaces openvpn {{ interface }} mode 'server'
+{%     for option in options %}
+set interfaces openvpn {{ interface }} openvpn-option '{{ option }}'
+{%     endfor %}
+set interfaces openvpn {{ interface }} persistent-tunnel
+set interfaces openvpn {{ interface }} protocol {{ connection.protocol }}
+set interfaces openvpn {{ interface }} server domain-name {{ domain }}
+set interfaces openvpn {{ interface }} server max-connections '250'
+{%     for nameserver in name_servers %}
+set interfaces openvpn {{ interface }} server name-server {{ nameserver }}
+{%     endfor %}
+{%     for route in route.push %}
+set interfaces openvpn {{ interface }} server push-route {{ route }}
+{%     endfor %}
+set interfaces openvpn {{ interface }} server subnet {{ subnet }}
+set interfaces openvpn {{ interface }} server topology 'subnet'
+set interfaces openvpn {{ interface }} tls ca-certificate 'ca'
+set interfaces openvpn {{ interface }} tls certificate 'cert'
+set interfaces openvpn {{ interface }} tls dh-params 'dh'
+{% endif %}
+
+
+### Client config
+
+client
+nobind
+remote {{ connection.local.address }} {{ connection.local.port }}
+remote-cert-tls server
+proto {{ connection.protocol }}
+
+# VPN protocol and cipher
+dev tun
+cipher AES-256-GCM
+
+# Authentication settings
+auth SHA256
+
+# Add 'AES-256-CBC' to --data-ciphers
+data-ciphers AES-256-GCM:AES-128-GCM:AES-256-CBC
+
+dev-type tun
+persist-key
+persist-tun
+verb 3
+
+# Keep the connection alive
+keepalive 10 60
+
+
+<ca>
+-----BEGIN CERTIFICATE-----
+x
+-----END CERTIFICATE-----
+</ca>
+
+<cert>
+-----BEGIN CERTIFICATE-----
+x
+-----END CERTIFICATE-----
+</cert>
+
+<key>
+-----BEGIN PRIVATE KEY-----
+x
+-----END PRIVATE KEY-----
+</key>
