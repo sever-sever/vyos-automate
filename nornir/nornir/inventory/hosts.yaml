@@ -1,0 +1,14 @@
+---
+r1:
+  hostname: 192.0.2.11
+  port: 22
+  groups:
+    - vyos
+  platform: vyos
+
+r4:
+  hostname: 192.0.2.14
+  port: 22
+  groups:
+    - vyos
+  platform: vyos
