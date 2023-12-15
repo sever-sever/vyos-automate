@@ -31,6 +31,25 @@ On the bngblaster node start test for 1000 session:
 sudo bngblaster -C pppoe.json -I -c 1000
 ```
 
+Example for VyOS 1.5
+```shell
+set service pppoe-server access-concentrator 'ACN'
+set service pppoe-server authentication local-users username foo password 'bar'
+set service pppoe-server authentication mode 'local'
+set service pppoe-server client-ip-pool ONE range '100.64.0.0/17'
+set service pppoe-server client-ipv6-pool delegate 2001:db8:8003::/48 delegation-prefix '56'
+set service pppoe-server client-ipv6-pool prefix 2001:db8:8002::/48 mask '64'
+set service pppoe-server default-pool 'ONE'
+set service pppoe-server gateway-address '100.64.0.1'
+set service pppoe-server interface eth1
+set service pppoe-server interface eth1.23
+set service pppoe-server name-server '100.64.0.1'
+set service pppoe-server name-server '203.0.113.1'
+set service pppoe-server ppp-options ipv6 'allow'
+set service pppoe-server session-control 'disable'
+
+```
+
 Example with RADIUS authentication:
 ```
 set container name radius allow-host-networks
