@@ -13,3 +13,4 @@ RUN wget https://github.com/osrg/gobgp/releases/download/v3.21.0/gobgp_3.21.0_li
     && mv /tmp/gobgp /tmp/gobgpd /usr/local/bin/ \
     && rm -rf /tmp/*
 
+CMD gobgpd --config-file=/opt/gobgp/bgp.conf

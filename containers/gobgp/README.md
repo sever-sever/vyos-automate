@@ -1,6 +1,6 @@
 # gobgp container in VyOS
 
-Build container
+Build container:
 ```shell
 sudo podman build --net host --tag gobgp:one -f ./Dockerfile
 ```
