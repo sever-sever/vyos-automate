@@ -1,0 +1,12 @@
+[global.config]
+  as = $SYSTEM_AS
+  router-id = "$ROUTER_ID"
+
+[[neighbors]]
+  [neighbors.config]
+    neighbor-address = "$PEER_ADDRESS"
+    peer-as = $PEER_AS
+
+  [[neighbors.afi-safis]]
+    [neighbors.afi-safis.config]
+      afi-safi-name = "ipv4-flowspec"
