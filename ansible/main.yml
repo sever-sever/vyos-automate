@@ -1,80 +1,10 @@
 ---
 
-- hosts: r4
+- hosts: vyos_hosts
+  gather_facts: no
 
-  strategy: free
-  gather_facts: 'no'
-  remote_user: root
-
-  vars:
-    repo: bookworm
-    #repo: buster
-    version: '1.5'
-
-  tasks:
-    - name: Configure remote {{ inventory_hostname }} (1.4) {{ ansible_ssh_host }}
-      vyos_config:
-        lines:
-          - set system host-name {{ inventory_hostname }}
-          - set system name-server 1.1.1.1
-          - set service ssh disable-host-validation
-          - set system login user vyos authentication public-keys docker@work type ssh-rsa
-          - set system login user vyos authentication public-keys docker@work key "{{ lookup('file', 'id_rsa_docker.pub') }}"
-          - set system option time-format '24-hour'
-          - set system time-zone Europe/Kiev
-          - set interfaces ethernet eth0 description WAN
-          - set service https api keys id KID key 'foo'
-          - set service https api socket
-          - set service https api graphql
-        backup: no
-      when: version == "1.5"
-
-    - name: Configure remote r1 (1.3)
-      vyos_config:
-        lines:
-          - set system host-name {{ inventory_hostname }}
-          - set system name-server 1.1.1.1
-          - set service ssh disable-host-validation
-          - set system login user vyos authentication public-keys docker@work type ssh-rsa
-          - set system login user vyos authentication public-keys docker@work key "{{ lookup('file', 'id_rsa_docker.pub') }}"
-          - set system time-zone Europe/Kiev
-          - set interfaces ethernet eth0 description WAN
-          - set service https api keys id KID key 'foo'
-          - set service https api socket
-        backup: no
-      when: version == "1.3"
-
-    - name: Copy cetrificates and keys to server (1.3)
-      net_put:
-        src: "files/{{ item }}"
-        dest: "/config/auth/{{ item }}"
-      loop:
-        - ca.crt
-        - dh.pem
-        - central.crt
-        - central.key
-        - branch1.crt
-        - branch1.key
-      when: version == "1.3"
-
-    - name: Add repo to /tmp 1.5
-      vars:
-        repo: bookworm
-      net_put:
-        src: "files/mysource-{{ repo }}.list"
-        dest: "/tmp/mysource-{{ repo }}.list"
-      become: yes
-      when: version == "1.5"
-
-    - name: Add repo to /tmp 1.3
-      vars:
-        repo: buster
-      net_put:
-        src: "files/mysource-{{ repo }}.list"
-        dest: "/tmp/mysource-{{ repo }}.list"
-      become: yes
-      when: version == "1.3"
-
-
-    - name: Move repo from tmp to apt
-      command: ssh vyos@{{ ansible_ssh_host }} "sudo mv /tmp/mysource-{{ repo }}.list /etc/apt/sources.list.d/mysource.list"
+  roles:
+    - interfaces
+    - banner
+    - routing
+    - api

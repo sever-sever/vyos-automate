@@ -1,16 +1,13 @@
 ---
-
 - hosts: r4
-
-  gather_facts: 'no'
-
+  gather_facts: no
 
   tasks:
     - name: Gather interface facts
       vyos_facts:
         gather_subset:
-          - '!all'
-          - '!min'
+          - "!all"
+          - "!min"
         gather_network_resources:
           - interfaces
       register: ansible_net_interfaces

@@ -1,10 +1,9 @@
 ---
 
 - hosts: r1
-
-  gather_facts: 'no'
-
+  gather_facts: no
   tasks:
+
     - name: Add post-login banner
       vyos.vyos.vyos_banner:
         banner: post-login

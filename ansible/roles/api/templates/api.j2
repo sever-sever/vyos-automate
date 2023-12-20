@@ -1,0 +1,5 @@
+{% if api.enable %}
+{%     for k in api.api_keys %}
+set service https api keys id {{ k.name }} key '{{ k.key }}'
+{%     endfor %}
+{% endif %}

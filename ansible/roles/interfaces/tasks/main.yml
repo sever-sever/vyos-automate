@@ -1,5 +1,5 @@
 ---
 
 - name: Configure interface address on {{ inventory_hostname }}
-  vyos_config:
+  vyos.vyos.vyos_config:
     src: interfaces.j2

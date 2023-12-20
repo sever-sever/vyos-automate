@@ -1,0 +1,5 @@
+---
+
+- name: Configure API keys on {{ ansible_ssh_host }}
+  vyos.vyos.vyos_config:
+    src: api.j2
