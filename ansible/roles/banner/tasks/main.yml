@@ -1,6 +1,6 @@
 ---
 
-- name: Add post-login banner on {{ inventory_hostname }}
+- name: Add post-login banner
   vyos.vyos.vyos_banner:
     banner: post-login
     text: |

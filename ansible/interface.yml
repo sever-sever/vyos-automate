@@ -1,6 +1,6 @@
 ---
 - hosts: r4
-  gather_facts: no
+  gather_facts: false
 
   tasks:
     - name: Gather interface facts

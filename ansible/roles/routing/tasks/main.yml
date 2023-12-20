@@ -1,9 +1,11 @@
 ---
 
-- name: Configure OSPF on {{ inventory_hostname }}
+- name: Configure OSPF
   vyos.vyos.vyos_config:
     src: ospf.j2
+  when: routing.ospf.enable
 
-- name: Configure ISIS on {{ inventory_hostname }}
+- name: Configure ISIS
   vyos.vyos.vyos_config:
     src: isis.j2
+  when: routing.isis.enable

@@ -1,7 +1,7 @@
 ---
 
 - hosts: r1
-  gather_facts: no
+  gather_facts: false
   tasks:
 
     - name: Add post-login banner

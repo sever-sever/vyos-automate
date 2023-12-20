@@ -1,7 +1,7 @@
 ---
 
 - hosts: vyos_hosts
-  gather_facts: no
+  gather_facts: false
 
   roles:
     - interfaces
