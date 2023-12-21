@@ -1,0 +1,9 @@
+{% if routing.bgp.enable %}
+{%     if vyos_version == 1.5 %}
+set protocol bgp system-as '{{ routing.bgp.asn }}'
+{%     endif %}
+{%     set asn = '' if vyos_version == 1.5 or vyos_version == 1.4 else routing.bgp.asn %}
+set protocols bgp {{ asn }} neighbor {{ bgp.neighbor }} remote-as {{ routing.bgp.asn }}
+set protocols bgp {{ asn }} neighbor {{ bgp.neighbor }} address-family ipv4-unicast soft-reconfiguration inbound
+set protocols bgp {{ asn }} neighbor {{ bgp.neighbor }} description 'Configured by ansible'
+{% endif %}

@@ -1,0 +1,6 @@
+---
+api:
+  enable: true
+  api_keys:
+    - name: KID
+      key: foo

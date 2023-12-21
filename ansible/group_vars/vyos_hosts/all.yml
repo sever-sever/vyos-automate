@@ -8,23 +8,3 @@ ansible_network_os         : vyos
 ansible_connection         : ansible.netcommon.network_cli
 gather_facts               : false
 
-# Routing
-routing:
-  ospf:
-    enable: false
-    area: 0
-  isis:
-    enable: true
-  bgp:
-    enable: false
-
-# API
-api:
-  enable: true
-  api_keys:
-    - name: KID
-      key: foo
-
-name_servers:
-  - 1.1.1.1
-  - 8.8.8.8

@@ -1,6 +1,7 @@
 {% if routing.isis.enable %}
-set protocols isis net {{ isis.net }}
+set protocols isis net '{{ isis.net }}'
 set protocols isis redistribute ipv4 connected level-2
+set protocols isis redistribute ipv6 connected level-2
 
 {%     for interface in isis.interfaces %}
 set protocols isis interface {{ interface }}

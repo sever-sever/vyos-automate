@@ -28,3 +28,6 @@ isis:
   net: 49.0001.1920.0200.0011.00
   interfaces:
     - eth1
+
+bgp:
+  neighbor: 192.0.2.1

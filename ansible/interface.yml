@@ -1,5 +1,5 @@
 ---
-- hosts: r4
+- hosts: vyos_hosts
   gather_facts: false
 
   tasks:

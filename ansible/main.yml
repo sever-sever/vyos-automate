@@ -5,6 +5,7 @@
 
   roles:
     - interfaces
+    - common
     - banner
     - routing
     - api
