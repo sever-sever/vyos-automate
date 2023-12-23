@@ -1,6 +1,6 @@
 ---
 
-- hosts: r1
+- hosts: r4
   gather_facts: false
   tasks:
 
