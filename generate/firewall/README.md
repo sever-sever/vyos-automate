@@ -12,8 +12,8 @@ set firewall ipv4 input filter default-action 'drop'
 
 set firewall ipv4 input filter rule 10 description 'Allow established/related'
 set firewall ipv4 input filter rule 10 action 'accept'
-set firewall ipv4 input filter rule 10 state established 'enable'
-set firewall ipv4 input filter rule 10 state related 'enable'
+set firewall ipv4 input filter rule 10 state established
+set firewall ipv4 input filter rule 10 state related
 ...
 
 ```
