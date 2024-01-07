@@ -1,0 +1,57 @@
+---
+- name: create VMs
+  hosts: localhost
+  gather_facts: no
+  connection: local
+
+  vars:
+    qcow_template: /home/sever/Downloads/ISO/vyos-1.4.0-cloud-init-2G-qemu.qcow2
+  vars_files:
+      - vars/guests_qcow.yml
+
+  tasks:
+      - name: Get list of VMs
+        virt:
+            command: "list_vms"
+        register: virt_vms
+
+      - name: Copy qcow2 from template "{{ qcow_template }}"
+        become: true
+        copy:
+            src: "{{ qcow_template }}"
+            dest: "{{ item.disk.path }}/{{ item.name }}.qcow2"
+        when: item.name not in virt_vms.list_vms
+        with_items: "{{ guests }}"
+
+      - name: Ensure generated/user-data directory exists
+        ansible.builtin.file:
+          path: "{{ playbook_dir }}/generated/user-data"
+          state: directory
+
+      - name: Template user-data
+        ansible.builtin.template:
+          src: "{{ playbook_dir }}/templates/user-data.j2"
+          dest: "{{ playbook_dir }}/generated/user-data/{{ item.name }}"
+        with_items: "{{ guests }}"
+
+      - name: Create vm
+        command: virt-install -n {{ item.name }}
+                 --ram {{ item.mem }}
+                 --vcpus {{ item.cpu }}
+                 --cloud-init "meta-data={{ playbook_dir }}/templates/meta-data,user-data={{ playbook_dir }}/generated/user-data/{{ item.name }}"
+                 --os-variant {{ item.os.variant }}
+                 --network network=default
+                 --graphics vnc
+                 --{{item.virt_hypervisor}}
+                 --virt-type {{ item.virt_type }}
+                 --disk path={{item.disk.path}}/{{item.name}}.qcow2,bus=virtio
+                 --import
+                 --noautoconsole
+        when: item.name not in virt_vms.list_vms
+        with_items: "{{ guests }}"
+
+      - name: make sure all vms are running
+        virt:
+            name: "{{ item.name }}"
+            state: running
+        with_items: "{{ guests }}"

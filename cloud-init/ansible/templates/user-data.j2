@@ -1,0 +1,5 @@
+#cloud-config
+vyos_config_commands:
+  - set system host-name '{{ item.name }}'
+  - delete interfaces ethernet eth0 address
+  - set interfaces ethernet eth0 address '{{ item.address }}/{{ item.prefix }}'

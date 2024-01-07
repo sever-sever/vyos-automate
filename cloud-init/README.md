@@ -11,7 +11,7 @@ docker build --tag vyos-vm-images:latest -f ./Dockerfile .
 ```
 3. Start and connect to the container:
 ```shell
-docker run --rm -it --privileged -v $(pwd):/vm-build -v $(pwd)/images:/tmp -w /vm-build vyos-vm-images:latest bash
+docker run --rm -it --privileged -v $(pwd):/vm-build -v $(pwd)/images:/images -w /vm-build vyos-vm-images:latest bash
 ```
 4. Clone repo
 ```

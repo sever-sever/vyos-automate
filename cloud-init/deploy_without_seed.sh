@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-#cp /tmp/vyos_raw_image.qcow2 /var/lib/libvirt/images/vyos_kvm.qcow2
 cp vyos-1.4.0-cloud-init-2G-qemu.qcow2 /var/lib/libvirt/images/vyos_kvm.qcow2
 
 virt-install -n vyos_r1 \
-   --ram 2048 \
+   --ram 4096 \
    --vcpus 2 \
-   --cdrom seed.iso \
+   --cloud-init meta-data=meta-data,user-data=user-data \
    --os-variant debian10 \
    --network network=default \
    --graphics vnc \
@@ -15,4 +14,3 @@ virt-install -n vyos_r1 \
    --disk path=/var/lib/libvirt/images/vyos_kvm.qcow2,bus=virtio \
    --import \
    --noautoconsole
-

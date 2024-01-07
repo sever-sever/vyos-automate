@@ -1,0 +1,28 @@
+---
+guests:
+    - name: ci-r1
+      cpu: 1
+      mem: 1024
+      virt_type: kvm
+      virt_hypervisor: hvm
+      os:
+          variant: debian10
+      disk:
+          path: /var/lib/libvirt/images
+      iface: eth0
+      address: 192.168.122.31
+      prefix: 24
+
+    - name: ci-r2
+      cpu: 1
+      mem: 1024
+      virt_type: kvm
+      virt_hypervisor: hvm
+      os:
+          variant: debian10
+      disk:
+          path: /var/lib/libvirt/images
+      iface: eth0
+      address: 192.168.122.32
+      prefix: 24
+
