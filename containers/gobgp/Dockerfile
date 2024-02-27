@@ -7,7 +7,7 @@ RUN apk add --update nano gettext \
 RUN mkdir -p /opt/gobgp/template
 
 # Download and install gobgp
-RUN wget https://github.com/osrg/gobgp/releases/download/v3.22.0/gobgp_3.22.0_linux_amd64.tar.gz -O /tmp/gobgp.tar.gz \
+RUN wget https://github.com/osrg/gobgp/releases/download/v3.23.0/gobgp_3.23.0_linux_amd64.tar.gz -O /tmp/gobgp.tar.gz \
     && tar -zxf /tmp/gobgp.tar.gz --directory /tmp/ \
     && mv /tmp/gobgp /tmp/gobgpd /usr/local/bin/ \
     && rm -rf /tmp/*
