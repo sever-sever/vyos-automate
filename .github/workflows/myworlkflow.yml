@@ -3,10 +3,12 @@ name: My-tmp-workflow
 on:
   # push:
   #   branches:
-  #     - main
+  #     - current
   pull_request:
     types:
       - closed
+    branches:
+      - current
   workflow_dispatch:
 
 jobs:
