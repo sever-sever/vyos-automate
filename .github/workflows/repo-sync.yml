@@ -1,14 +1,22 @@
 name: Repo-sync-reuse
 
+#secrets:
+#  REMOTE_REPO: ${{ secrets.REMOTE_REPO }}
+#  REMOTE_OWNER: ${{ secrets.REMOTE_OWNER }}
+#  PAT: ${{ secrets.PAT }}
+
 on:
-    #pull_request:
-    #  types:
-    #    - closed
-    #  branches:
-    #    - current
-    workflow_dispatch:
+  #pull_request:
+  #  types:
+  #    - closed
+  #  branches:
+  #    - current
+  workflow_dispatch:
 
 jobs:
   trigger-sync:
     uses: vyos/.github/.github/workflows/trigger-repo-sync.yml@feature/T6349-reusable-workflows
-    secrets: inherit
+    secrets:
+      REMOTE_REPO: ${{ secrets.REMOTE_REPO }}
+      REMOTE_OWNER: ${{ secrets.REMOTE_OWNER }}
+      PAT: ${{ secrets.PAT }}
