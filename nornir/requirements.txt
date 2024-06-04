@@ -5,7 +5,7 @@ charset-normalizer==3.3.2
 colorama==0.4.6
 cryptography==42.0.4
 future==0.18.3
-idna==3.6
+idna==3.7
 Jinja2==3.1.4
 junos-eznc==2.6.8
 lxml==4.9.3
